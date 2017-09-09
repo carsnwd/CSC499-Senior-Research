@@ -9,13 +9,14 @@ def find_shortest_route(source, destination):
     :return: a string containing the shortest path in the network from source to destination
     '''
     graph = init_graph()
+    distances = init_distances()
     costs = init_costs(graph)
     parents = init_parents(graph)
     processed_nodes = []
     # Init the source node distance to itself as 0
     costs[source] = 0
     parents[source] = source
-    current_node = get_min_node(costs, processed_nodes)
+    current_node = get_min_node(costs, distances, processed_nodes, destination)
 
     while current_node is not None:
         cost_to_current_node = costs[current_node]  # Current cost to this node
@@ -72,6 +73,33 @@ def init_costs(graph):
         costs[i] = INFINITY
     return costs
 
+def init_distances():
+    distances = {}
+
+    # A
+    distances["A"]["C"] = 6
+    distances["A"]["B"] = 7
+    distances["A"]["D"] = 4
+    distances["A"]["E"] = 3
+    # B
+    distances["B"]["D"] = 2
+    distances["B"]["E"] = 4
+    distances["B"]["A"] = 7
+    distances["B"]["C"] = 2
+    # C
+    distances["C"]["D"] = 5
+    distances["C"]["E"] = 1
+    distances["C"]["A"] = 6
+    distances["C"]["B"] = 4
+
+    # D
+    distances["D"]["E"] = 4
+    distances["D"]["A"] = 10
+    distances["D"]["B"] = 8
+    distances["D"]["C"] = 6
+
+    return distances
+
 
 def init_parents(graph):
     '''
@@ -87,7 +115,7 @@ def init_parents(graph):
     return parents
 
 
-def distance_to_destination():
+def distance_to_destination(distances, source, destination):
     '''
     Gives the heuristic distance from
     a node to the destination node.
@@ -96,14 +124,9 @@ def distance_to_destination():
     :return: distance to destination node heuristic
     '''
 
-    #########
-    # TO DO #
-    #########
+    return distances[source][destination]
 
-    return 0
-
-
-def get_min_node(costs, processed_nodes):
+def get_min_node(costs, distances, processed_nodes, destination):
     '''
     Returns the min node so far from costs
     :param costs:
@@ -114,7 +137,7 @@ def get_min_node(costs, processed_nodes):
     min_node = None  # Set current node to null
     for node in costs:  # For every node in costs
         # If the node is smaller than the current smallest AND the node has not yet been processed
-        if costs[node] + distance_to_destination[node] < min_node_cost and node not in processed_nodes:
+        if costs[node] + distance_to_destination(distances, node, destination) < min_node_cost and node not in processed_nodes:
             # New current min node
             min_node_cost = costs[node]
             min_node = node
