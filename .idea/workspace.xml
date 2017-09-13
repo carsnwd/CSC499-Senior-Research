@@ -2,8 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9d8c1287-ef99-45f5-9cb2-c63e6375c699" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/researchproject.iml" afterPath="$PROJECT_DIR$/.idea/researchproject.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/astar.py" afterPath="$PROJECT_DIR$/src/astar.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/dijkstras.py" afterPath="$PROJECT_DIR$/src/dijkstras.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/astar_test.py" afterPath="$PROJECT_DIR$/test/astar_test.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/dijkstras_test.py" afterPath="$PROJECT_DIR$/test/dijkstras_test.py" />
     </list>
+    <ignored path="sensitive.config" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,10 +20,47 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/researchproject$testtt.coverage" NAME="testtt Coverage Results" MODIFIED="1503513728781" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
-    <SUITE FILE_PATH="coverage/researchproject$Unittests_for_dijkstras_test_TestGraphDijkstras_test_costs_initialization.coverage" NAME="Unittests for dijkstras_test.TestGraphDijkstras.test_costs_initialization Coverage Results" MODIFIED="1504057578049" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
-    <SUITE FILE_PATH="coverage/researchproject$dijkstras.coverage" NAME="dijkstras Coverage Results" MODIFIED="1504058761905" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
     <SUITE FILE_PATH="coverage/researchproject$Unittests_in_dijkstras_test_py.coverage" NAME="Unittests in dijkstras_test.py Coverage Results" MODIFIED="1504059256764" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/CSC499_Senior_Research$Unittests_in_dijkstras_test_py.coverage" NAME="Unittests in dijkstras_test.py Coverage Results" MODIFIED="1505317853255" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/researchproject$Unittests_for_dijkstras_test_TestGraphDijkstras_test_costs_initialization.coverage" NAME="Unittests for dijkstras_test.TestGraphDijkstras.test_costs_initialization Coverage Results" MODIFIED="1504057578049" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/CSC499_Senior_Research$Unittests_in_astar_test_py.coverage" NAME="Unittests in astar_test.py Coverage Results" MODIFIED="1505219113589" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test" />
+    <SUITE FILE_PATH="coverage/researchproject$dijkstras.coverage" NAME="dijkstras Coverage Results" MODIFIED="1504058761905" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/researchproject$testtt.coverage" NAME="testtt Coverage Results" MODIFIED="1503513728781" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+    <SUITE FILE_PATH="coverage/CSC499_Senior_Research$dijkstras.coverage" NAME="dijkstras Coverage Results" MODIFIED="1505135219565" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_TABLE_DETAILS" value="true" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <expand>
+      <path>
+        <item name="" type="eadb38e5:DatabaseStructure$Root" />
+        <item name="connecticut@localhost" type="e3449647:DbNodeDescriptor" />
+      </path>
+      <path>
+        <item name="" type="eadb38e5:DatabaseStructure$Root" />
+        <item name="connecticut@localhost" type="e3449647:DbNodeDescriptor" />
+        <item name="connecticut" type="e3449647:DbNodeDescriptor" />
+      </path>
+      <path>
+        <item name="" type="eadb38e5:DatabaseStructure$Root" />
+        <item name="connecticut@localhost" type="e3449647:DbNodeDescriptor" />
+        <item name="connecticut" type="e3449647:DbNodeDescriptor" />
+        <item name="public" type="e3449647:DbNodeDescriptor" />
+      </path>
+      <path>
+        <item name="" type="eadb38e5:DatabaseStructure$Root" />
+        <item name="connecticut@localhost" type="e3449647:DbNodeDescriptor" />
+        <item name="connecticut" type="e3449647:DbNodeDescriptor" />
+        <item name="public" type="e3449647:DbNodeDescriptor" />
+        <item name="" type="fce03ad6:DatabaseStructure$GroupNode" />
+      </path>
+    </expand>
+    <select />
   </component>
   <component name="FileColors">
     <fileColor scope="Non-Project Files (Material Default)" color="2E3C43" />
@@ -25,21 +70,43 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="dijkstras.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dijkstras.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/dijkstras.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="20" column="32" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="141" selection-end-column="24" />
+            <state relative-caret-position="255">
+              <caret line="74" column="43" lean-forward="false" selection-start-line="74" selection-start-column="43" selection-end-line="74" selection-end-column="43" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="astar.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="astar.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/astar.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="104" column="0" lean-forward="true" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+            <state relative-caret-position="300">
+              <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="astar_test.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/astar_test.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="190">
+              <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="console.sql" pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/6eda7770-802a-4171-9256-8aad402ba42c/console.sql">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -48,11 +115,21 @@
       <file leaf-file-name="dijkstras_test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/dijkstras_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="483">
-              <caret line="24" column="62" lean-forward="false" selection-start-line="24" selection-start-column="62" selection-end-line="24" selection-end-column="62" />
+            <state relative-caret-position="225">
+              <caret line="15" column="24" lean-forward="false" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sensitive.config" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sensitive.config">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="8" lean-forward="false" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -76,9 +153,11 @@
         <option value="$PROJECT_DIR$/__init__.py" />
         <option value="$PROJECT_DIR$/source/dijkstras_test.py" />
         <option value="$PROJECT_DIR$/src/testtt.py" />
+        <option value="$PROJECT_DIR$/src/astar.py" />
+        <option value="$PROJECT_DIR$/test/astar_test.py" />
+        <option value="$PROJECT_DIR$/sensitive.config" />
         <option value="$PROJECT_DIR$/test/dijkstras_test.py" />
         <option value="$PROJECT_DIR$/src/dijkstras.py" />
-        <option value="$PROJECT_DIR$/src/astar.py" />
       </list>
     </option>
   </component>
@@ -110,36 +189,37 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
-              <item name="researchproject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="researchproject" type="462c0819:PsiDirectoryNode" />
+              <item name="CSC499-Senior-Research" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CSC499-Senior-Research" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="researchproject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="researchproject" type="462c0819:PsiDirectoryNode" />
+              <item name="CSC499-Senior-Research" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CSC499-Senior-Research" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
-              <item name="researchproject" type="b2602c69:ProjectViewProjectNode" />
-              <item name="researchproject" type="462c0819:PsiDirectoryNode" />
+              <item name="CSC499-Senior-Research" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CSC499-Senior-Research" type="462c0819:PsiDirectoryNode" />
               <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Ignored.Files" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/sensitive.config" />
+    <property name="com.intellij.database.dataSource.DataSourceTemplate" value="PostgreSQL" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -175,6 +255,21 @@
       <option name="_new_additionalArguments" value="&quot;&quot;" />
       <option name="_new_target" value="&quot;dijkstras_test.TestGraphDijkstras.test_costs_initialization&quot;" />
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+    </configuration>
+    <configuration name="Unittests in astar_test.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="researchproject" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/test/astar_test.py&quot;" />
+      <option name="_new_targetType" value="&quot;PATH&quot;" />
     </configuration>
     <configuration name="Unittests in dijkstras_test.py" type="tests" factoryName="Unittests" temporary="true" nameIsGenerated="true">
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -227,18 +322,20 @@
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
     </configuration>
-    <list size="4">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in dijkstras_test.py" />
       <item index="1" class="java.lang.String" itemvalue="Python.testtt" />
       <item index="2" class="java.lang.String" itemvalue="Python.dijkstras" />
       <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests for dijkstras_test.TestGraphDijkstras.test_costs_initialization" />
+      <item index="4" class="java.lang.String" itemvalue="Python tests.Unittests in astar_test.py" />
     </list>
     <recent_temporary>
-      <list size="4">
+      <list size="5">
         <item index="0" class="java.lang.String" itemvalue="Python tests.Unittests in dijkstras_test.py" />
-        <item index="1" class="java.lang.String" itemvalue="Python.dijkstras" />
-        <item index="2" class="java.lang.String" itemvalue="Python tests.Unittests for dijkstras_test.TestGraphDijkstras.test_costs_initialization" />
-        <item index="3" class="java.lang.String" itemvalue="Python.testtt" />
+        <item index="1" class="java.lang.String" itemvalue="Python tests.Unittests in astar_test.py" />
+        <item index="2" class="java.lang.String" itemvalue="Python.dijkstras" />
+        <item index="3" class="java.lang.String" itemvalue="Python tests.Unittests for dijkstras_test.TestGraphDijkstras.test_costs_initialization" />
+        <item index="4" class="java.lang.String" itemvalue="Python.testtt" />
       </list>
     </recent_temporary>
   </component>
@@ -284,55 +381,62 @@
       <option name="project" value="LOCAL" />
       <updated>1504577003367</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Astar tests">
+      <created>1505135079523</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1505135079524</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="Unittests_for_dijkstras_test_TestGraphDijkstras_test_costs_initialization - 2017.08.29 at 21h 46m 12s.xml">
-      <configuration name="Unittests for dijkstras_test.TestGraphDijkstras.test_costs_initialization" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_for_dijkstras_test_TestGraphDijkstras_test_costs_initialization - 2017.08.29 at 21h 48m 23s.xml">
-      <configuration name="Unittests for dijkstras_test.TestGraphDijkstras.test_costs_initialization" configurationId="tests" />
-    </history-entry>
-    <history-entry file="Unittests_in_dijkstras_test_py - 2017.08.29 at 21h 59m 05s.xml">
+    <history-entry file="Unittests_in_dijkstras_test_py - 2017.09.13 at 11h 46m 42s.xml">
       <configuration name="Unittests in dijkstras_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_dijkstras_test_py - 2017.08.29 at 21h 59m 23s.xml">
+    <history-entry file="Unittests_in_dijkstras_test_py - 2017.09.13 at 11h 47m 07s.xml">
       <configuration name="Unittests in dijkstras_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_dijkstras_test_py - 2017.08.29 at 22h 02m 14s.xml">
+    <history-entry file="Unittests_in_dijkstras_test_py - 2017.09.13 at 11h 47m 28s.xml">
       <configuration name="Unittests in dijkstras_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_dijkstras_test_py - 2017.08.29 at 22h 02m 43s.xml">
+    <history-entry file="Unittests_in_dijkstras_test_py - 2017.09.13 at 11h 48m 05s.xml">
       <configuration name="Unittests in dijkstras_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_dijkstras_test_py - 2017.08.29 at 22h 03m 45s.xml">
+    <history-entry file="Unittests_in_dijkstras_test_py - 2017.09.13 at 11h 48m 32s.xml">
       <configuration name="Unittests in dijkstras_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_dijkstras_test_py - 2017.08.29 at 22h 06m 49s.xml">
+    <history-entry file="Unittests_in_dijkstras_test_py - 2017.09.13 at 11h 49m 30s.xml">
       <configuration name="Unittests in dijkstras_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_dijkstras_test_py - 2017.08.29 at 22h 07m 06s.xml">
+    <history-entry file="Unittests_in_dijkstras_test_py - 2017.09.13 at 11h 49m 45s.xml">
       <configuration name="Unittests in dijkstras_test.py" configurationId="tests" />
     </history-entry>
-    <history-entry file="Unittests_in_dijkstras_test_py - 2017.08.29 at 22h 14m 16s.xml">
+    <history-entry file="Unittests_in_dijkstras_test_py - 2017.09.13 at 11h 50m 16s.xml">
+      <configuration name="Unittests in dijkstras_test.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_dijkstras_test_py - 2017.09.13 at 11h 50m 42s.xml">
+      <configuration name="Unittests in dijkstras_test.py" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Unittests_in_dijkstras_test_py - 2017.09.13 at 11h 50m 53s.xml">
       <configuration name="Unittests in dijkstras_test.py" configurationId="tests" />
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="498" y="-8" width="1680" height="1020" extended-state="6" />
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297619" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32894737" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3297414" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39978448" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -351,7 +455,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Init commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Init commit" />
+    <MESSAGE value="Astar tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="Astar tests" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -360,6 +465,22 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/dijkstras.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/astar.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1560">
+          <caret line="104" column="0" lean-forward="true" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/dijkstras.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -421,10 +542,44 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/testtt.py" />
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/6eda7770-802a-4171-9256-8aad402ba42c/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/astar_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="25" column="0" lean-forward="false" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/astar.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sensitive.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="8" lean-forward="false" selection-start-line="0" selection-start-column="8" selection-end-line="0" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/test/dijkstras_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="483">
-          <caret line="24" column="62" lean-forward="false" selection-start-line="24" selection-start-column="62" selection-end-line="24" selection-end-column="62" />
+        <state relative-caret-position="225">
+          <caret line="15" column="24" lean-forward="false" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
@@ -433,16 +588,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/dijkstras.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="20" column="32" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="141" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/astar.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="104" column="0" lean-forward="true" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+        <state relative-caret-position="255">
+          <caret line="74" column="43" lean-forward="false" selection-start-line="74" selection-start-column="43" selection-end-line="74" selection-end-column="43" />
           <folding />
         </state>
       </provider>

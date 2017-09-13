@@ -32,7 +32,7 @@ class TestGraphAStar(unittest.TestCase):
         # Test all are init to infinity
         self.assertEquals(distances["B"]["A"], 7)
 
-    def test_dijkstras(self):
+    def test_astar(self):
         self.assertEquals(astar.find_shortest_route("A", "B"), "A->B")
         self.assertEquals(astar.find_shortest_route("A", "C"), "A->C")
         self.assertEquals(astar.find_shortest_route("A", "D"), "A->B->D")

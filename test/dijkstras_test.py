@@ -11,6 +11,10 @@ class TestGraphDijkstras(unittest.TestCase):
         self.assertNotEqual(graph["B"]["E"], 2)
         self.assertEquals(graph.__len__(), 5)
 
+    def test_database_connection(self):
+        conn = dijkstra.connect_to_database()
+        self.assertIsNotNone(conn)
+
     def test_costs_initialization(self):
         graph = dijkstra.init_graph()
         costs = dijkstra.init_costs(graph)

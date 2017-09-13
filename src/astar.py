@@ -23,7 +23,7 @@ def find_shortest_route(source, destination):
         neighbors = graph[current_node]  # Get neighbors of current node
         relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parents)  # Relax neighboring nodes
         processed_nodes.append(current_node)  # Add current node to processed nodes
-        current_node = get_min_node(costs, processed_nodes)  # Get next node with shortest distance
+        current_node = get_min_node(costs, distances, processed_nodes, destination)  # Get next node with shortest distance
     return display_shortest_route(parents, source, destination)
 
 
@@ -75,28 +75,44 @@ def init_costs(graph):
 
 def init_distances():
     distances = {}
+    distances["A"] = {}
+    distances["B"] = {}
+    distances["C"] = {}
+    distances["D"] = {}
+    distances["E"] = {}
 
     # A
+    distances["A"]["A"] = 0
     distances["A"]["C"] = 6
     distances["A"]["B"] = 7
     distances["A"]["D"] = 4
     distances["A"]["E"] = 3
     # B
+    distances["B"]["B"] = 0
     distances["B"]["D"] = 2
     distances["B"]["E"] = 4
     distances["B"]["A"] = 7
     distances["B"]["C"] = 2
     # C
+    distances["C"]["C"] = 0
     distances["C"]["D"] = 5
     distances["C"]["E"] = 1
     distances["C"]["A"] = 6
     distances["C"]["B"] = 4
 
     # D
+    distances["D"]["D"] = 0
     distances["D"]["E"] = 4
     distances["D"]["A"] = 10
     distances["D"]["B"] = 8
     distances["D"]["C"] = 6
+
+    # E
+    distances["E"]["E"] = 0
+    distances["E"]["A"] = 3
+    distances["E"]["B"] = 7
+    distances["E"]["C"] = 1
+    distances["E"]["D"] = 4
 
     return distances
 

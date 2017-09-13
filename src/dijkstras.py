@@ -1,3 +1,5 @@
+import psycopg2
+
 INFINITY = float("inf")
 
 def find_shortest_route(source, destination):
@@ -29,8 +31,13 @@ def init_graph():
     '''
     Initializes a graph with nodes and
     the corresponding neighbors.
+
+
+
     :return: graph
     '''
+    conn = connect_to_database()
+
     graph = {}
     graph["A"] = {}
     graph["B"] = {}
@@ -55,6 +62,23 @@ def init_graph():
     # E has no neighbors after it
 
     return graph
+
+
+def connect_to_database():
+    '''
+    Establishes connection with database.
+    :return: conn
+    '''
+    # Read password in from config
+    with open("../sensitive.config") as f:
+        content = f.readlines()
+    password = [x.strip() for x in content]
+
+    try:
+        conn = psycopg2.connect("dbname='connecticut' user='postgres' host='localhost' password='"+password.__getitem__(0)+"'")
+        return conn
+    except:
+        print "I am unable to connect to the database"
 
 
 def init_costs(graph):
@@ -123,6 +147,8 @@ def relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parent
             costs[neighbor] = new_distance_to_neighbor
             parents[neighbor] = current_node
             # We have now relaxed all of the current nodes neighbors
+
+
 
 
 def display_shortest_route(parents, source, destination):
