@@ -2,6 +2,7 @@ import psycopg2
 
 INFINITY = float("inf")
 
+
 def find_shortest_route(source, destination):
     '''
     Finds the shortest route between a source node and a destination node
@@ -31,37 +32,59 @@ def init_graph():
     '''
     Initializes a graph with nodes and
     the corresponding neighbors.
-
-
-
     :return: graph
     '''
-    conn = connect_to_database()
-
     graph = {}
-    graph["A"] = {}
-    graph["B"] = {}
-    graph["C"] = {}
-    graph["D"] = {}
-    graph["E"] = {}
+    conn = connect_to_database()
+    cur = conn.cursor()
+    cur.execute('SELECT id FROM ways_vertices_pgr')
+    row = cur.fetchone()
+    while row:
+        graph[float(row[0])] = {}
+        row = cur.fetchone()
 
-    '''
-    Initialize neighbors
-    '''
-    # A
-    graph["A"]["C"] = 6
-    graph["A"]["B"] = 7
-    # B
-    graph["B"]["D"] = 2
-    graph["B"]["E"] = 4
-    # C
-    graph["C"]["D"] = 5
-    graph["C"]["E"] = 1
-    # D
-    graph["D"]["E"] = 4
-    # E has no neighbors after it
+    cur.execute('SELECT source, target, length_m FROM ways')
+    row = cur.fetchone()
+    while row:
+        c1 = float(row[0])
+        c2 = float(row[1])
+        print "c1: " + str(c1)
+        print "c2: " + str(c2)
+        graph[c1][c2] = float(row[2])
+        row = cur.fetchone()
 
     return graph
+
+
+
+    # graph = {}
+    # graph["A"] = {}
+    # graph["B"] = {}
+    # graph["C"] = {}
+    # graph["D"] = {}
+    # graph["E"] = {}
+    #
+    # '''
+    # Initialize neighbors
+    # '''
+    # # A
+    # graph["A"]["C"] = 6
+    # graph["A"]["B"] = 7
+    # # B
+    # graph["B"]["D"] = 2
+    # graph["B"]["E"] = 4
+    # # C
+    # graph["C"]["D"] = 5
+    # graph["C"]["E"] = 1
+    # # D
+    # graph["D"]["E"] = 4
+    # # E has no neighbors after it
+    #
+    # return graph
+
+
+def get_coordinate(lat, lon):
+    return str(lat) + "," + str(lon)
 
 
 def connect_to_database():
@@ -74,11 +97,14 @@ def connect_to_database():
         content = f.readlines()
     password = [x.strip() for x in content]
 
+    # Establish connection
     try:
-        conn = psycopg2.connect("dbname='connecticut' user='postgres' host='localhost' password='"+password.__getitem__(0)+"'")
+        conn = psycopg2.connect(
+            "dbname='connecticut' user='postgres' host='localhost' password='" + password.__getitem__(0) + "'")
         return conn
     except:
         print "I am unable to connect to the database"
+        print "dbname='connecticut' user='postgres' host='localhost' password='" + password.__getitem__(0) + "'"
 
 
 def init_costs(graph):
@@ -147,8 +173,6 @@ def relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parent
             costs[neighbor] = new_distance_to_neighbor
             parents[neighbor] = current_node
             # We have now relaxed all of the current nodes neighbors
-
-
 
 
 def display_shortest_route(parents, source, destination):
