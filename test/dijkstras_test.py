@@ -19,18 +19,18 @@ class TestGraphDijkstras(unittest.TestCase):
         self.assertEquals(float(row[0]), -73.5419236)
         self.assertEquals(float(row[1]), 41.3891845)
 
-    # def test_costs_initialization(self):
-    #     graph = dijkstra.init_graph()
-    #     costs = dijkstra.init_costs(graph)
-    #     infinity = float("inf")
-    #     # Test all are init to infinity
-    #     for i in costs:
-    #         self.assertEquals(costs[i], infinity)
-    #     self.assertEquals(graph["A"], {'C': 6, 'B': 7})
-    #     # Test getting neighbor label works
-    #     self.assertEquals(graph["A"].keys(), ['C', 'B'])
-    #     # Test getting edge to neighbor weight is valid
-    #     self.assertEquals(graph["A"][graph["A"].keys()[0]], 6)
+    def test_costs_initialization(self):
+        graph = dijkstra.init_graph()
+        costs = dijkstra.init_costs(graph)
+        infinity = float("inf")
+        # Test all are init to infinity
+        for i in costs:
+            self.assertEquals(costs[i], infinity)
+        self.assertEquals(graph[22029], {13644: 50.5501874762328, 35820: 20.86742605803})
+        # Test getting neighbor label works
+        self.assertEquals(graph[22029].keys(), [13644, 35820])
+        # Test getting edge to neighbor weight is valid
+        self.assertEquals(graph[22029][graph[22029].keys()[0]], 50.5501874762328)
 
     # def test_dijkstras(self):
     #     self.assertEquals(dijkstra.find_shortest_route("A","B"), "A->B")

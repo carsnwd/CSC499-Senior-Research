@@ -48,8 +48,8 @@ def init_graph():
     while row:
         c1 = float(row[0])
         c2 = float(row[1])
-        print "c1: " + str(c1)
-        print "c2: " + str(c2)
+        # print "c1: " + str(c1)
+        # print "c2: " + str(c2)
         graph[c1][c2] = float(row[2])
         row = cur.fetchone()
 
