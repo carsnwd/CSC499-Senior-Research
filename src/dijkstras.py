@@ -24,6 +24,8 @@ def find_shortest_route(source, destination):
         neighbors = graph[current_node]  # Get neighbors of current node
         relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parents)  # Relax neighboring nodes
         processed_nodes.append(current_node)  # Add current node to processed nodes
+        if current_node == destination:
+            break
         current_node = get_min_node(costs, processed_nodes)  # Get next node with shortest distance
     return display_shortest_route(parents, source, destination)
 
@@ -54,37 +56,6 @@ def init_graph():
         row = cur.fetchone()
 
     return graph
-
-
-
-    # graph = {}
-    # graph["A"] = {}
-    # graph["B"] = {}
-    # graph["C"] = {}
-    # graph["D"] = {}
-    # graph["E"] = {}
-    #
-    # '''
-    # Initialize neighbors
-    # '''
-    # # A
-    # graph["A"]["C"] = 6
-    # graph["A"]["B"] = 7
-    # # B
-    # graph["B"]["D"] = 2
-    # graph["B"]["E"] = 4
-    # # C
-    # graph["C"]["D"] = 5
-    # graph["C"]["E"] = 1
-    # # D
-    # graph["D"]["E"] = 4
-    # # E has no neighbors after it
-    #
-    # return graph
-
-
-def get_coordinate(lat, lon):
-    return str(lat) + "," + str(lon)
 
 
 def connect_to_database():
@@ -184,9 +155,11 @@ def display_shortest_route(parents, source, destination):
     :param destination: destination node
     :return: a string with the shortest path from source to destination
     '''
-    path = "->" + destination
+    path = str(destination)
     current_node = parents[destination]
     while current_node is not source:
-        path = "->" + str(current_node) + path
+        path = str(current_node) + " -> " + str(path)
         current_node = parents[current_node]
-    return source + path
+    return str(path)
+
+print find_shortest_route(22029, 37579)

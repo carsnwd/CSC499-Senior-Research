@@ -1,3 +1,5 @@
+import psycopg2
+
 INFINITY = float("inf")
 
 
@@ -9,21 +11,24 @@ def find_shortest_route(source, destination):
     :return: a string containing the shortest path in the network from source to destination
     '''
     graph = init_graph()
-    distances = init_distances()
     costs = init_costs(graph)
     parents = init_parents(graph)
     processed_nodes = []
     # Init the source node distance to itself as 0
     costs[source] = 0
     parents[source] = source
-    current_node = get_min_node(costs, distances, processed_nodes, destination)
+    current_node = get_min_node(costs, processed_nodes, destination)
 
     while current_node is not None:
+        print current_node
+        print destination
         cost_to_current_node = costs[current_node]  # Current cost to this node
         neighbors = graph[current_node]  # Get neighbors of current node
-        relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parents)  # Relax neighboring nodes
+        relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parents, destination)  # Relax neighboring nodes
         processed_nodes.append(current_node)  # Add current node to processed nodes
-        current_node = get_min_node(costs, distances, processed_nodes, destination)  # Get next node with shortest distance
+        if current_node == destination:
+            break
+        current_node = get_min_node(costs, processed_nodes, destination)  # Get next node with shortest distance
     return display_shortest_route(parents, source, destination)
 
 
@@ -34,29 +39,45 @@ def init_graph():
     :return: graph
     '''
     graph = {}
-    graph["A"] = {}
-    graph["B"] = {}
-    graph["C"] = {}
-    graph["D"] = {}
-    graph["E"] = {}
+    conn = connect_to_database()
+    cur = conn.cursor()
+    cur.execute('SELECT osm_id FROM ways_vertices_pgr')
+    row = cur.fetchone()
+    while row:
+        graph[float(row[0])] = {}
+        row = cur.fetchone()
 
-    '''
-    Initialize neighbors
-    '''
-    # A
-    graph["A"]["C"] = 6
-    graph["A"]["B"] = 7
-    # B
-    graph["B"]["D"] = 2
-    graph["B"]["E"] = 4
-    # C
-    graph["C"]["D"] = 5
-    graph["C"]["E"] = 1
-    # D
-    graph["D"]["E"] = 4
-    # E has no neighbors after it
+    cur.execute('SELECT source_osm, target_osm, length FROM ways')
+    row = cur.fetchone()
+    while row:
+        c1 = float(row[0])
+        c2 = float(row[1])
+        # print "c1: " + str(c1)
+        # print "c2: " + str(c2)
+        graph[c1][c2] = float(row[2])
+        row = cur.fetchone()
 
     return graph
+
+
+def connect_to_database():
+    '''
+    Establishes connection with database.
+    :return: conn
+    '''
+    # Read password in from config
+    with open("../sensitive.config") as f:
+        content = f.readlines()
+    password = [x.strip() for x in content]
+
+    # Establish connection
+    try:
+        conn = psycopg2.connect(
+            "dbname='connecticut' user='postgres' host='localhost' password='" + password.__getitem__(0) + "'")
+        return conn
+    except:
+        print "I am unable to connect to the database"
+        print "dbname='connecticut' user='postgres' host='localhost' password='" + password.__getitem__(0) + "'"
 
 
 def init_costs(graph):
@@ -73,50 +94,6 @@ def init_costs(graph):
         costs[i] = INFINITY
     return costs
 
-def init_distances():
-    distances = {}
-    distances["A"] = {}
-    distances["B"] = {}
-    distances["C"] = {}
-    distances["D"] = {}
-    distances["E"] = {}
-
-    # A
-    distances["A"]["A"] = 0
-    distances["A"]["C"] = 6
-    distances["A"]["B"] = 7
-    distances["A"]["D"] = 4
-    distances["A"]["E"] = 3
-    # B
-    distances["B"]["B"] = 0
-    distances["B"]["D"] = 2
-    distances["B"]["E"] = 4
-    distances["B"]["A"] = 7
-    distances["B"]["C"] = 2
-    # C
-    distances["C"]["C"] = 0
-    distances["C"]["D"] = 5
-    distances["C"]["E"] = 1
-    distances["C"]["A"] = 6
-    distances["C"]["B"] = 4
-
-    # D
-    distances["D"]["D"] = 0
-    distances["D"]["E"] = 4
-    distances["D"]["A"] = 10
-    distances["D"]["B"] = 8
-    distances["D"]["C"] = 6
-
-    # E
-    distances["E"]["E"] = 0
-    distances["E"]["A"] = 3
-    distances["E"]["B"] = 7
-    distances["E"]["C"] = 1
-    distances["E"]["D"] = 4
-
-    return distances
-
-
 def init_parents(graph):
     '''
     Initializes the parent nodes of the shortest
@@ -131,18 +108,35 @@ def init_parents(graph):
     return parents
 
 
-def distance_to_destination(distances, source, destination):
+def distance_to_destination(source, destination):
     '''
     Gives the heuristic distance from
     a node to the destination node.
 
-    This will be built into PostGIS with real data.
+    Extracts the lon and lat coordinates from hte point in the ways db
+    given the id of the source and destination points. Using PostGIS built
+    in ST_Distance, it gets the euclidean distance in meters from the source to destination.
     :return: distance to destination node heuristic
     '''
 
-    return distances[source][destination]
+    source = int(source)
+    destination = int(destination)
+    conn = connect_to_database()
+    cur = conn.cursor()
+    cur.execute('SELECT lon, lat FROM ways_vertices_pgr WHERE osm_id =' + str(source))
+    source_coords = cur.fetchone()
+    cur.execute('SELECT lon, lat FROM ways_vertices_pgr WHERE osm_id =' + str(destination))
+    destination_coords = cur.fetchone()
 
-def get_min_node(costs, distances, processed_nodes, destination):
+    cur.execute("SELECT ST_Distance(ST_GeomFromText('POINT(" + str(source_coords[0]) + " " + str(
+        source_coords[1]) + ")', 4326),ST_GeomFromText('POINT(" + str(destination_coords[0]) + " " + str(
+        destination_coords[1]) + ")', 4326))")
+    distance = cur.fetchone()
+
+    return float(distance[0])
+
+
+def get_min_node(costs, processed_nodes, destination):
     '''
     Returns the min node so far from costs
     :param costs:
@@ -151,16 +145,17 @@ def get_min_node(costs, distances, processed_nodes, destination):
     '''
     min_node_cost = INFINITY  # Set current min to inf
     min_node = None  # Set current node to null
+    destination = float(destination)
     for node in costs:  # For every node in costs
-        # If the node is smaller than the current smallest AND the node has not yet been processed
-        if costs[node] + distance_to_destination(distances, node, destination) < min_node_cost and node not in processed_nodes:
+        # print "min_node_cost:   " + str(min_node_cost)
+        if costs[node] < min_node_cost and node not in processed_nodes:
             # New current min node
             min_node_cost = costs[node]
             min_node = node
     return min_node
 
 
-def relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parents):
+def relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parents, destination):
     '''
     Relaxing neighbors is the process of checking each neighbor of a node and updating
     our shortest costs if this new route is shorter.
@@ -172,7 +167,7 @@ def relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parent
     :return:
     '''
     for neighbor in neighbors:  # For each neighbor...
-        new_distance_to_neighbor = cost_to_current_node + neighbors[neighbor]  # Get the new distance to this neighbor
+        new_distance_to_neighbor = cost_to_current_node + (neighbors[neighbor] + distance_to_destination(neighbor, destination)) # Get the new distance to this neighbor
         current_distance_to_neighbor = costs[neighbor]  # Get the current distance to this neighbor
         # If it is cheaper to go this way to this neighbor then add that as the shortest cost from the source
         if new_distance_to_neighbor < current_distance_to_neighbor:
@@ -190,9 +185,9 @@ def display_shortest_route(parents, source, destination):
     :param destination: destination node
     :return: a string with the shortest path from source to destination
     '''
-    path = "->" + destination
+    path = str(destination)
     current_node = parents[destination]
     while current_node is not source:
-        path = "->" + str(current_node) + path
+        path = str(current_node) + " -> " + str(path)
         current_node = parents[current_node]
-    return source + path
+    return str(path)

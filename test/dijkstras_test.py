@@ -32,11 +32,9 @@ class TestGraphDijkstras(unittest.TestCase):
         # Test getting edge to neighbor weight is valid
         self.assertEquals(graph[22029][graph[22029].keys()[0]], 50.5501874762328)
 
-    # def test_dijkstras(self):
-    #     self.assertEquals(dijkstra.find_shortest_route("A","B"), "A->B")
-    #     self.assertEquals(dijkstra.find_shortest_route("A","C"), "A->C")
-    #     self.assertEquals(dijkstra.find_shortest_route("A","D"), "A->B->D")
-    #     self.assertEquals(dijkstra.find_shortest_route("A","E"), "A->C->E")
+    def test_dijkstras(self):
+        self.assertEquals(dijkstra.find_shortest_route(22029,35820), "22029.0 -> 35820")
+        self.assertEquals(dijkstra.find_shortest_route(22029,37579), "22029.0 -> 35820.0 -> 37579")
 
 if __name__ == '__main__':
     unittest.main()

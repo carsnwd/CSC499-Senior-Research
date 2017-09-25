@@ -5,11 +5,19 @@ import src.astar as astar
 class TestGraphAStar(unittest.TestCase):
     def test_graph_initialization(self):
         graph = astar.init_graph()
-        self.assertEquals(graph["A"]["C"], 6)
-        self.assertEquals(graph["A"]["B"], 7)
-        self.assertEquals(graph["C"]["D"], 5)
-        self.assertNotEqual(graph["B"]["E"], 2)
-        self.assertEquals(graph.__len__(), 5)
+        self.assertIsNotNone(graph)
+        self.assertEquals(graph[60642422][60642896], 0.000192337879785143)
+        self.assertEquals(graph.__len__(), 240188)
+
+    def test_database_connection(self):
+        conn = astar.connect_to_database()
+        self.assertIsNotNone(conn)
+        cur = conn.cursor()
+        cur.execute('SELECT x1,y1 FROM ways')
+        row = cur.fetchone()
+        print str(float(row[0])) + str(",") + str(float(row[1]))
+        self.assertEquals(float(row[0]), -73.5419236)
+        self.assertEquals(float(row[1]), 41.3891845)
 
     def test_costs_initialization(self):
         graph = astar.init_graph()
@@ -18,25 +26,18 @@ class TestGraphAStar(unittest.TestCase):
         # Test all are init to infinity
         for i in costs:
             self.assertEquals(costs[i], infinity)
-        self.assertEquals(graph["A"], {'C': 6, 'B': 7})
+        self.assertEquals(graph[60642422], {60642896: 0.000192337879785143, 1900216568: 0.000596244412977484})
         # Test getting neighbor label works
-        self.assertEquals(graph["A"].keys(), ['C', 'B'])
+        self.assertEquals(graph[60642422].keys(), [60642896.0, 1900216568.0])
         # Test getting edge to neighbor weight is valid
-        self.assertEquals(graph["A"][graph["A"].keys()[0]], 6)
+        self.assertEquals(graph[60642422][graph[60642422].keys()[0]], 0.000192337879785143)
 
-    def test_init_distances(self):
-        graph = astar.init_graph()
-        costs = astar.init_costs(graph)
-        infinity = float("inf")
-        distances = astar.init_distances()
-        # Test all are init to infinity
-        self.assertEquals(distances["B"]["A"], 7)
+    def test_get_distance(self):
+        self.assertEquals(astar.distance_to_destination(60642422, 83997901), 0.0658882536679388)
 
     def test_astar(self):
-        self.assertEquals(astar.find_shortest_route("A", "B"), "A->B")
-        self.assertEquals(astar.find_shortest_route("A", "C"), "A->C")
-        self.assertEquals(astar.find_shortest_route("A", "D"), "A->B->D")
-        self.assertEquals(astar.find_shortest_route("A", "E"), "A->C->E")
+        self.assertEquals(astar.find_shortest_route(60642422, 60642896), "60642422.0 -> 60642896")
+        self.assertEquals(astar.find_shortest_route(60642422, 60642900), "60642422.0 -> 60642896.0 -> 60642900")
 
 if __name__ == '__main__':
     unittest.main()
