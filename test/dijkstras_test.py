@@ -33,8 +33,8 @@ class TestGraphDijkstras(unittest.TestCase):
         self.assertEquals(graph[22029][graph[22029].keys()[0]], 50.5501874762328)
 
     def test_dijkstras(self):
-        self.assertEquals(dijkstra.find_shortest_route(22029,35820), "22029.0 -> 35820")
-        self.assertEquals(dijkstra.find_shortest_route(22029,37579), "22029.0 -> 35820.0 -> 37579")
+        self.assertEquals(dijkstra.find_shortest_route(22029, [35820]), [[35820, 22029.0]])
+        self.assertEquals(dijkstra.find_shortest_route(22029, [37579, 35820]), [[37579, 35820.0, 22029.0], [35820, 22029.0]])
 
 if __name__ == '__main__':
     unittest.main()

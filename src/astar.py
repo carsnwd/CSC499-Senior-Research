@@ -3,33 +3,38 @@ import psycopg2
 INFINITY = float("inf")
 
 
-def find_shortest_route(source, destination):
+def find_shortest_route(source, destinations):
     '''
     Finds the shortest route between a source node and a destination node
     :param source: node to start at
     :param destination: node to finish at
     :return: a string containing the shortest path in the network from source to destination
     '''
-    graph = init_graph()
-    costs = init_costs(graph)
-    parents = init_parents(graph)
-    processed_nodes = []
-    # Init the source node distance to itself as 0
-    costs[source] = 0
-    parents[source] = source
-    current_node = get_min_node(costs, processed_nodes, destination)
+    destinations_left = destinations[:]
+    shortest_routes = []
+    for destination in destinations_left:
+        graph = init_graph()
+        costs = init_costs(graph)
+        parents = init_parents(graph)
+        processed_nodes = []
+        # Init the source node distance to itself as 0
+        costs[source] = 0
+        parents[source] = source
+        current_node = get_min_node(costs, processed_nodes, destination)
 
-    while current_node is not None:
-        print current_node
-        print destination
-        cost_to_current_node = costs[current_node]  # Current cost to this node
-        neighbors = graph[current_node]  # Get neighbors of current node
-        relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parents, destination)  # Relax neighboring nodes
-        processed_nodes.append(current_node)  # Add current node to processed nodes
-        if current_node == destination:
-            break
-        current_node = get_min_node(costs, processed_nodes, destination)  # Get next node with shortest distance
-    return display_shortest_route(parents, source, destination)
+        while current_node is not None:
+            print current_node
+            print destination
+            cost_to_current_node = costs[current_node]  # Current cost to this node
+            neighbors = graph[current_node]  # Get neighbors of current node
+            relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parents, destination)  # Relax neighboring nodes
+            processed_nodes.append(current_node)  # Add current node to processed nodes
+            if current_node == destination:
+                break
+            current_node = get_min_node(costs, processed_nodes, destination)  # Get next node with shortest distance
+        destinations_left.remove(destination)
+        shortest_routes.append(display_shortest_route(parents, source, destination))
+    return shortest_routes
 
 
 def init_graph():
@@ -185,9 +190,10 @@ def display_shortest_route(parents, source, destination):
     :param destination: destination node
     :return: a string with the shortest path from source to destination
     '''
-    path = str(destination)
+    points_of_line = []
+    points_of_line.append(destination)
     current_node = parents[destination]
     while current_node is not source:
-        path = str(current_node) + " -> " + str(path)
+        points_of_line.append(current_node)
         current_node = parents[current_node]
-    return str(path)
+    return points_of_line

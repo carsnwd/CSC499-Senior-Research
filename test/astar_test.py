@@ -36,8 +36,8 @@ class TestGraphAStar(unittest.TestCase):
         self.assertEquals(astar.distance_to_destination(60642422, 83997901), 0.0658882536679388)
 
     def test_astar(self):
-        self.assertEquals(astar.find_shortest_route(60642422, 60642896), "60642422.0 -> 60642896")
-        self.assertEquals(astar.find_shortest_route(60642422, 60642900), "60642422.0 -> 60642896.0 -> 60642900")
+        self.assertEquals(astar.find_shortest_route(60642422, [60642896]), [[60642896, 60642422.0]])
+        self.assertEquals(astar.find_shortest_route(60642422, [60642900]), [[60642900, 60642896.0, 60642422.0]])
 
 if __name__ == '__main__':
     unittest.main()

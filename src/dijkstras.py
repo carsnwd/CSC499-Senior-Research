@@ -18,14 +18,18 @@ def find_shortest_route(source, destination):
     costs[source] = 0
     parents[source] = source
     current_node = get_min_node(costs, processed_nodes)
+    # Make a copy of the destinations
+    destinations_left = destination[:]
 
     while current_node is not None:
         cost_to_current_node = costs[current_node]  # Current cost to this node
         neighbors = graph[current_node]  # Get neighbors of current node
         relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parents)  # Relax neighboring nodes
         processed_nodes.append(current_node)  # Add current node to processed nodes
-        if current_node == destination:
-            break
+        if current_node in destinations_left:
+            destinations_left.remove(current_node)
+            if destinations_left.__len__() is 0:
+                break
         current_node = get_min_node(costs, processed_nodes)  # Get next node with shortest distance
     return display_shortest_route(parents, source, destination)
 
@@ -146,20 +150,24 @@ def relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parent
             # We have now relaxed all of the current nodes neighbors
 
 
-def display_shortest_route(parents, source, destination):
+def display_shortest_route(parents, source, destinations):
     '''
     Creates a shortest route string in easy to read
     language.
     :param parents: parent nodes
     :param source:  source node
-    :param destination: destination node
+    :param destinations: destination node
     :return: a string with the shortest path from source to destination
     '''
-    path = str(destination)
-    current_node = parents[destination]
-    while current_node is not source:
-        path = str(current_node) + " -> " + str(path)
-        current_node = parents[current_node]
-    return str(path)
+    shortest_routes = []
+    for current_destination in destinations:
+        points_of_line = []
+        points_of_line.append(current_destination)
+        current_node = parents[current_destination]
+        while current_node is not source:
+            points_of_line.append(current_node)
+            current_node = parents[current_node]
+        shortest_routes.append(points_of_line)
+    return shortest_routes
 
-print find_shortest_route(22029, 37579)
+print find_shortest_route(22029, [37579, 35820])
