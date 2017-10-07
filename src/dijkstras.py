@@ -28,8 +28,8 @@ def find_shortest_route(source, destination):
         processed_nodes.append(current_node)  # Add current node to processed nodes
         if current_node in destinations_left:
             destinations_left.remove(current_node)
-            if destinations_left.__len__() is 0:
-                break
+            # if destinations_left.__len__() is 0:
+            #     break
         current_node = get_min_node(costs, processed_nodes)  # Get next node with shortest distance
     return display_shortest_route(parents, source, destination)
 
