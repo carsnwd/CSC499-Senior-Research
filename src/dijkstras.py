@@ -78,8 +78,8 @@ def connect_to_database():
             "dbname='connecticut' user='postgres' host='localhost' password='" + password.__getitem__(0) + "'")
         return conn
     except:
-        print "I am unable to connect to the database"
-        print "dbname='connecticut' user='postgres' host='localhost' password='" + password.__getitem__(0) + "'"
+        print("I am unable to connect to the database")
+        print("dbname='connecticut' user='postgres' host='localhost' password='" + password.__getitem__(0) + "'")
 
 
 def init_costs(graph):
@@ -170,4 +170,4 @@ def display_shortest_route(parents, source, destinations):
         shortest_routes.append(points_of_line)
     return shortest_routes
 
-print find_shortest_route(22029, [37579, 35820])
+print(find_shortest_route(22029, [37579, 35820]))
