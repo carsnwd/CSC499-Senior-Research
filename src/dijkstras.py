@@ -28,8 +28,8 @@ def find_shortest_route(source, destination):
         processed_nodes.append(current_node)  # Add current node to processed nodes
         if current_node in destinations_left:
             destinations_left.remove(current_node)
-            # if destinations_left.__len__() is 0:
-            #     break
+            if destinations_left.__len__() is 0:
+                break
         current_node = get_min_node(costs, processed_nodes)  # Get next node with shortest distance
     return display_shortest_route(parents, source, destination)
 
@@ -43,13 +43,13 @@ def init_graph():
     graph = {}
     conn = connect_to_database()
     cur = conn.cursor()
-    cur.execute('SELECT id FROM ways_vertices_pgr')
+    cur.execute('SELECT osm_id FROM ways_vertices_pgr')
     row = cur.fetchone()
     while row:
         graph[float(row[0])] = {}
         row = cur.fetchone()
 
-    cur.execute('SELECT source, target, length_m FROM ways')
+    cur.execute('SELECT source_osm, target_osm, length FROM ways')
     row = cur.fetchone()
     while row:
         c1 = float(row[0])
@@ -169,5 +169,3 @@ def display_shortest_route(parents, source, destinations):
             current_node = parents[current_node]
         shortest_routes.append(points_of_line)
     return shortest_routes
-
-print(find_shortest_route(22029, [37579, 35820]))
