@@ -16,8 +16,8 @@ class TestGraphDijkstras(unittest.TestCase):
         cur.execute('SELECT x1,y1 FROM ways')
         row = cur.fetchone()
         print str(float(row[0])) + str(",") + str(float(row[1]))
-        self.assertEquals(float(row[0]), -73.5419236)
-        self.assertEquals(float(row[1]), 41.3891845)
+        self.assertEquals(float(row[0]), -73.4418006)
+        self.assertEquals(float(row[1]), 41.0593617)
 
     def test_costs_initialization(self):
         graph = dijkstra.init_graph()
@@ -26,11 +26,11 @@ class TestGraphDijkstras(unittest.TestCase):
         # Test all are init to infinity
         for i in costs:
             self.assertEquals(costs[i], infinity)
-        self.assertEquals(graph[60642422], {60642896: 0.000192337879785143, 1900216568: 0.000596244412977484})
+        self.assertEquals(graph[60642422], {1900216568: 0.000596244412977484, 60642896: 0.000192337879785143})
         # Test getting neighbor label works
-        self.assertEquals(graph[60642422].keys(), [60642896.0, 1900216568.0])
+        self.assertEquals(graph[60642422].keys(), [1900216568.0, 60642896.0])
         # Test getting edge to neighbor weight is valid
-        self.assertEquals(graph[60642422][graph[60642422].keys()[0]], 0.000192337879785143)
+        self.assertEquals(graph[60642422][graph[60642422].keys()[0]], 0.000596244412977484)
 
     def test_dijkstras(self):
         self.assertEquals(dijkstra.find_shortest_route(60642422, [60642896]), [[60642896, 60642422.0]])
