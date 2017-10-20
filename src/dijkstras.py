@@ -207,8 +207,16 @@ def create_shortest_route_geom(shortest_routes, total_time, id):
             except IndexError:
                 print "Last element"
         total_geom = linemerge(lines)
-        hex_total_geom = shapely.wkb.dumps(total_geom, hex=True)
-        shortest_route_geoms.append(hex_total_geom)
-    return shortest_route_geoms, total_time, id
+        shortest_route_geoms.append(total_geom)
+    index_of_shortest_geom = 0
+    shortest_length = 0
+    for index, route_geom in enumerate(shortest_route_geoms):
+        if route_geom.length <= shortest_length:
+            index_of_shortest_geom = index
+    hex_shortest_route_geom = LineString(shortest_route_geoms[index_of_shortest_geom]).wkb_hex
+    insert_query = """INSERT INTO public.results(the_geom, total_time, id) VALUES (st_geomfromwkb(%(geom)s::geometry, 4326), %(total_time)s, %(id)s)"""
+    cur.execute(insert_query, {'geom': hex_shortest_route_geom, 'total_time': total_time, 'id': id})
+    conn.commit()
+    return shortest_route_geoms[index_of_shortest_geom], total_time, id
 
 print(find_shortest_route(83917069, [83958535]))
