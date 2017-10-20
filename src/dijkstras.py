@@ -157,6 +157,7 @@ def relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parent
             costs[neighbor] = new_distance_to_neighbor
             parents[neighbor] = current_node
             # We have now relaxed all of the current nodes neighbors
+    return len(neighbors)
 
 
 def display_shortest_route(parents, source, destinations, total_time, id):
@@ -193,12 +194,6 @@ def create_shortest_route_geom(shortest_routes, total_time, id):
     cur = conn.cursor()
     shortest_route_geoms = []
     for route in shortest_routes:
-        # source = str(int(route[1]))
-        # target = str(int(route[2]))
-        # query = 'SELECT the_geom FROM public.ways WHERE target_osm = ' + target + ' AND source_osm = ' + source + ' OR target_osm = ' + source + ' AND source_osm = ' + target + ';'
-        # cur.execute(query)
-        # binary_form_total_geom = cur.fetchone()
-        # total_geom = loads(binary_form_total_geom[0])
         lines = []
         for index, node in enumerate(route):
             try:
@@ -212,7 +207,8 @@ def create_shortest_route_geom(shortest_routes, total_time, id):
             except IndexError:
                 print "Last element"
         total_geom = linemerge(lines)
-        shortest_route_geoms.append(total_geom)
+        hex_total_geom = shapely.wkb.dumps(total_geom, hex=True)
+        shortest_route_geoms.append(hex_total_geom)
     return shortest_route_geoms, total_time, id
 
-print(find_shortest_route(60642422, [60642896]))
+print(find_shortest_route(83917069, [83958535]))
