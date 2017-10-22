@@ -1,4 +1,9 @@
 import psycopg2
+import shapely.wkb
+from shapely.geometry import LineString
+from shapely.ops import linemerge
+import datetime
+import time
 
 INFINITY = float("inf")
 
@@ -8,8 +13,11 @@ def find_shortest_route(source, destinations):
     Finds the shortest route between a source node and a destination node
     :param source: node to start at
     :param destination: node to finish at
-    :return: a string containing the shortest path in the network from source to destination
+    :return: a string contai
+    ning the shortest path in the network from source to destination
     '''
+    id = datetime.datetime.now().strftime("%I%M%S%p%B%d%Y") #Use current exact time as ID
+    start = time.time()
     destinations_left = destinations[:]
     shortest_routes = []
     for destination in destinations_left:
@@ -23,8 +31,6 @@ def find_shortest_route(source, destinations):
         current_node = get_min_node(costs, processed_nodes, destination)
 
         while current_node is not None:
-            print current_node
-            print destination
             cost_to_current_node = costs[current_node]  # Current cost to this node
             neighbors = graph[current_node]  # Get neighbors of current node
             relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parents, destination)  # Relax neighboring nodes
@@ -34,7 +40,9 @@ def find_shortest_route(source, destinations):
             current_node = get_min_node(costs, processed_nodes, destination)  # Get next node with shortest distance
         destinations_left.remove(destination)
         shortest_routes.append(display_shortest_route(parents, source, destination))
-    return shortest_routes
+    end = time.time()
+    total_time = end - start
+    return generate_results_to_database(shortest_routes, total_time, id)
 
 
 def init_graph():
@@ -187,13 +195,58 @@ def display_shortest_route(parents, source, destination):
     language.
     :param parents: parent nodes
     :param source:  source node
-    :param destination: destination node
+    :param destinations: destination node
     :return: a string with the shortest path from source to destination
     '''
+    shortest_routes = []
     points_of_line = []
     points_of_line.append(destination)
     current_node = parents[destination]
     while current_node is not source:
         points_of_line.append(current_node)
         current_node = parents[current_node]
-    return points_of_line
+        shortest_routes.append(points_of_line)
+    return create_shortest_route_geom(points_of_line)
+
+
+def generate_results_to_database(shortest_route_geoms, total_time, id):
+    conn = connect_to_database()
+    cur = conn.cursor()
+    index_of_shortest_geom = 0
+    shortest_length = 0
+    for index, route_geom in enumerate(shortest_route_geoms):
+        if route_geom.length <= shortest_length:
+            index_of_shortest_geom = index
+    hex_shortest_route_geom = LineString(shortest_route_geoms[index_of_shortest_geom]).wkb_hex
+    insert_query = """INSERT INTO public.results_astar_one_to_one(the_geom, total_time, id) VALUES (st_geomfromwkb(%(geom)s::geometry, 4326), %(total_time)s, %(id)s)"""
+    cur.execute(insert_query, {'geom': hex_shortest_route_geom, 'total_time': total_time, 'id': id})
+    conn.commit()
+    return shortest_route_geoms[index_of_shortest_geom], total_time, id
+
+def create_shortest_route_geom(route):
+    '''
+    Exports the shortest route as a GIS geom to display in QGIS, along with time and id for analysis purposes
+    :param shortest_routes:
+    :param total_time:
+    :param id:
+    :return:
+    '''
+    conn = connect_to_database()
+    cur = conn.cursor()
+    lines = []
+    total_geom = None
+    for index, node in enumerate(route):
+        try:
+            source = str(int(node))
+            target = str(int(route[index + 1]))
+            query = 'SELECT the_geom FROM public.ways WHERE target_osm = ' + target + ' AND source_osm = ' + source + ' OR target_osm = ' + source + ' AND source_osm = ' + target + ';'
+            cur.execute(query)
+            hex_geom = cur.fetchone()
+            geom = shapely.wkb.loads(hex_geom[0], hex=True)
+            lines.append(geom)
+        except IndexError:
+            print "Last element"
+        total_geom = linemerge(lines)
+    return total_geom
+
+print(find_shortest_route(83917069, [83958535]))
