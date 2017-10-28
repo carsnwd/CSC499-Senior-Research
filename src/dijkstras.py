@@ -4,6 +4,7 @@ from shapely.geometry import LineString
 from shapely.ops import linemerge
 import datetime
 import time
+import signal
 
 INFINITY = float("inf")
 
@@ -27,6 +28,7 @@ def find_shortest_route(source, destination):
     current_node = get_min_node(costs, processed_nodes)
     # Make a copy of the destinations
     destinations_left = destination[:]
+    nodes_assessed = 0
 
     while current_node is not None:
         cost_to_current_node = costs[current_node]  # Current cost to this node
@@ -38,9 +40,10 @@ def find_shortest_route(source, destination):
             if destinations_left.__len__() is 0:
                 break
         current_node = get_min_node(costs, processed_nodes)  # Get next node with shortest distance
+        nodes_assessed = nodes_assessed + 1
     end = time.time()
     total_time = end - start
-    return display_shortest_route(parents, source, destination, total_time, id)
+    return display_shortest_route(parents, source, destination, total_time, id, nodes_assessed)
 
 
 def init_graph():
@@ -66,6 +69,7 @@ def init_graph():
         # print "c1: " + str(c1)
         # print "c2: " + str(c2)
         graph[c1][c2] = float(row[2])
+        graph[c2][c1] = float(row[2])
         row = cur.fetchone()
 
     return graph
@@ -84,11 +88,11 @@ def connect_to_database():
     # Establish connection
     try:
         conn = psycopg2.connect(
-            "dbname='connecticut' user='postgres' host='localhost' password='" + password.__getitem__(0) + "'")
+            "dbname='denver' user='postgres' host='localhost' password='" + password.__getitem__(0) + "'")
         return conn
     except:
         print("I am unable to connect to the database")
-        print("dbname='connecticut' user='postgres' host='localhost' password='" + password.__getitem__(0) + "'")
+        print("dbname='denver' user='postgres' host='localhost' password='" + password.__getitem__(0) + "'")
 
 
 def init_costs(graph):
@@ -134,8 +138,6 @@ def get_min_node(costs, processed_nodes):
         if costs[node] < min_node_cost and node not in processed_nodes:
             # New current min node
             min_node_cost = costs[node]
-
-
             min_node = node
     return min_node
 
@@ -162,7 +164,7 @@ def relax_neighbors(cost_to_current_node, costs, current_node, neighbors, parent
     return len(neighbors)
 
 
-def display_shortest_route(parents, source, destinations, total_time, id):
+def display_shortest_route(parents, source, destinations, total_time, id, node_assessed):
     '''
     Creates a shortest route string in easy to read
     language.
@@ -179,12 +181,12 @@ def display_shortest_route(parents, source, destinations, total_time, id):
         while current_node is not source:
             points_of_line.append(current_node)
             current_node = parents[current_node]
-        shortest_routes.append(points_of_line)
-    return create_shortest_route_geom(shortest_routes, total_time, id)
+            shortest_routes.append(points_of_line)
+    return create_shortest_route_geom(shortest_routes, total_time, id, node_assessed, source, destinations)
 
 
 
-def create_shortest_route_geom(shortest_routes, total_time, id):
+def create_shortest_route_geom(shortest_routes, total_time, id, nodes_assessed, original_source, original_destinations):
     '''
     Exports the shortest route as a GIS geom to display in QGIS, along with time and id for analysis purposes
     :param shortest_routes:
@@ -216,9 +218,49 @@ def create_shortest_route_geom(shortest_routes, total_time, id):
         if route_geom.length <= shortest_length:
             index_of_shortest_geom = index
     hex_shortest_route_geom = LineString(shortest_route_geoms[index_of_shortest_geom]).wkb_hex
-    insert_query = """INSERT INTO public.results_dijkstras_one_to_one(the_geom, total_time, id) VALUES (st_geomfromwkb(%(geom)s::geometry, 4326), %(total_time)s, %(id)s)"""
-    cur.execute(insert_query, {'geom': hex_shortest_route_geom, 'total_time': total_time, 'id': id})
+    insert_query = """INSERT INTO public.results_dijkstras_one_to_one(the_geom, total_time, id, nodes_assessed, source, destinations) VALUES (st_geomfromwkb(%(geom)s::geometry, 4326), %(total_time)s, %(id)s, %(nodes_assessed)s, %(source)s, %(destinations)s)"""
+    cur.execute(insert_query, {'geom': hex_shortest_route_geom, 'total_time': total_time, 'id': id, 'nodes_assessed': nodes_assessed, 'source': original_source, 'destinations': original_destinations})
     conn.commit()
-    return shortest_route_geoms[index_of_shortest_geom], total_time, id
+    return shortest_route_geoms[index_of_shortest_geom], total_time, id, nodes_assessed, original_source, original_destinations
 
-print(find_shortest_route(83917069, [83958535]))
+def run_experiment(sources_dataset, destinations_dataset):
+    print ("Start")
+    class TimeoutException(Exception):  # Custom exception class
+        pass
+
+    def timeout_handler(signum, frame):  # Custom signal handler
+        raise TimeoutException
+
+    signal.signal(signal.SIGALRM, timeout_handler)
+
+    for index, source in enumerate(sources_dataset):
+        d = destinations_dataset[index]
+        s = sources_dataset[index]
+        signal.alarm(3600)
+        try:
+            try:
+                if destinations_dataset[index] > sources_dataset[index]:
+                    print(find_shortest_route(destinations_dataset[index], [sources_dataset[index]]))
+                else:
+                    print(find_shortest_route(sources_dataset[index], [destinations_dataset[index]]))
+            except KeyError:
+                print str(d) + " " + str(s) + " have Key Errors!!!!"
+        except TimeoutException:
+            print str(d) + " " + str(s) + " took over 60 minutes"
+
+    print("DONE!")
+
+sources_dataset = []
+destinations_dataset = []
+
+import csv
+count = 0
+with open('denverpoints.csv', 'rb') as f:
+    reader = csv.reader(f)
+    for row in reader:
+        count = count + 1
+        sources_dataset.append(float(row[0]))
+        destinations_dataset.append(float(row[1]))
+print "Total rows is %d" % count
+
+run_experiment(sources_dataset, destinations_dataset)

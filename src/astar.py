@@ -20,6 +20,7 @@ def find_shortest_route(source, destinations):
     start = time.time()
     destinations_left = destinations[:]
     shortest_routes = []
+    nodes_assessed = 0
     for destination in destinations_left:
         graph = init_graph()
         costs = init_costs(graph)
@@ -38,11 +39,12 @@ def find_shortest_route(source, destinations):
             if current_node == destination:
                 break
             current_node = get_min_node(costs, processed_nodes, destination)  # Get next node with shortest distance
+            nodes_assessed = nodes_assessed + 1
         destinations_left.remove(destination)
         shortest_routes.append(display_shortest_route(parents, source, destination))
     end = time.time()
     total_time = end - start
-    return generate_results_to_database(shortest_routes, total_time, id)
+    return generate_results_to_database(shortest_routes, total_time, id, source, destinations, nodes_assessed)
 
 
 def init_graph():
@@ -68,6 +70,7 @@ def init_graph():
         # print "c1: " + str(c1)
         # print "c2: " + str(c2)
         graph[c1][c2] = float(row[2])
+        graph[c2][c1] = float(row[2])
         row = cur.fetchone()
 
     return graph
@@ -86,11 +89,11 @@ def connect_to_database():
     # Establish connection
     try:
         conn = psycopg2.connect(
-            "dbname='connecticut' user='postgres' host='localhost' password='" + password.__getitem__(0) + "'")
+            "dbname='denver' user='postgres' host='localhost' password='" + password.__getitem__(0) + "'")
         return conn
     except:
         print "I am unable to connect to the database"
-        print "dbname='connecticut' user='postgres' host='localhost' password='" + password.__getitem__(0) + "'"
+        print "dbname='denver' user='postgres' host='localhost' password='" + password.__getitem__(0) + "'"
 
 
 def init_costs(graph):
@@ -209,7 +212,7 @@ def display_shortest_route(parents, source, destination):
     return create_shortest_route_geom(points_of_line)
 
 
-def generate_results_to_database(shortest_route_geoms, total_time, id):
+def generate_results_to_database(shortest_route_geoms, total_time, id, source, destinations, nodes_assessed):
     conn = connect_to_database()
     cur = conn.cursor()
     index_of_shortest_geom = 0
@@ -218,10 +221,10 @@ def generate_results_to_database(shortest_route_geoms, total_time, id):
         if route_geom.length <= shortest_length:
             index_of_shortest_geom = index
     hex_shortest_route_geom = LineString(shortest_route_geoms[index_of_shortest_geom]).wkb_hex
-    insert_query = """INSERT INTO public.results_astar_one_to_one(the_geom, total_time, id) VALUES (st_geomfromwkb(%(geom)s::geometry, 4326), %(total_time)s, %(id)s)"""
-    cur.execute(insert_query, {'geom': hex_shortest_route_geom, 'total_time': total_time, 'id': id})
+    insert_query = """INSERT INTO public.results_astar_one_to_one(the_geom, total_time, id, nodes_assessed, source, destinations) VALUES (st_geomfromwkb(%(geom)s::geometry, 4326), %(total_time)s, %(id)s, %(nodes_assessed)s, %(source)s, %(destinations)s)"""
+    cur.execute(insert_query, {'geom': hex_shortest_route_geom, 'total_time': total_time, 'id': id, 'nodes_assessed': nodes_assessed, 'source': source, 'destinations': destinations})
     conn.commit()
-    return shortest_route_geoms[index_of_shortest_geom], total_time, id
+    return shortest_route_geoms[index_of_shortest_geom], total_time, id, source, destinations, nodes_assessed
 
 def create_shortest_route_geom(route):
     '''
@@ -249,4 +252,46 @@ def create_shortest_route_geom(route):
         total_geom = linemerge(lines)
     return total_geom
 
-print(find_shortest_route(83917069, [83958535]))
+import signal
+
+def run_experiment(sources_dataset, destinations_dataset):
+    print ("Start")
+    class TimeoutException(Exception):  # Custom exception class
+        pass
+
+    def timeout_handler(signum, frame):  # Custom signal handler
+        raise TimeoutException
+
+    signal.signal(signal.SIGALRM, timeout_handler)
+
+    for index, source in enumerate(sources_dataset):
+        d = destinations_dataset[index]
+        s = sources_dataset[index]
+        signal.alarm(3600)
+        try:
+            try:
+                if destinations_dataset[index] > sources_dataset[index]:
+                    print(find_shortest_route(destinations_dataset[index], [sources_dataset[index]]))
+                else:
+                    print(find_shortest_route(sources_dataset[index], [destinations_dataset[index]]))
+            except KeyError:
+                print str(d) + " " + str(s) + " have Key Errors!!!!"
+        except TimeoutException:
+            print str(d) + " " + str(s) + " took over 60 minutes"
+
+    print("DONE!")
+
+sources_dataset = []
+destinations_dataset = []
+
+import csv
+count = 0
+with open('denverpoints.csv', 'rb') as f:
+    reader = csv.reader(f)
+    for row in reader:
+        count = count + 1
+        sources_dataset.append(float(row[0]))
+        destinations_dataset.append(float(row[1]))
+print "Total rows is %d" % count
+
+run_experiment(sources_dataset, destinations_dataset)
