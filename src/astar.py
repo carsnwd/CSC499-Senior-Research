@@ -213,6 +213,17 @@ def display_shortest_route(parents, source, destination):
 
 
 def generate_results_to_database(shortest_route_geoms, total_time, id, source, destinations, nodes_assessed):
+    '''
+    Takes all the geoms generated from A* with the respetive info and stores into
+    the results table on the database.
+    :param shortest_route_geoms: array of all the shortest route geoms for the experiment
+    :param total_time: total time to run
+    :param id: id of the route
+    :param source: source of the route
+    :param destinations: destination(s) of the route
+    :param nodes_assessed: number of nodes that were assessed for the route
+    :return: the items that were imported to database
+    '''
     conn = connect_to_database()
     cur = conn.cursor()
     index_of_shortest_geom = 0
